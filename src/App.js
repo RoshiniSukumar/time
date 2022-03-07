@@ -1,12 +1,17 @@
 import './App.css';
 import React from "react";
-import { Button } from '@material-ui/core';
-import LoginIcon from '@material-ui/icons/AccountCircle';
-import Material from './components/material';
+import SignIn from './components/login/signin'
+import Register from './components/signup/register'
+import Admin from './components/admin/admin'
+
 export default function App() {
   return (
     <div>
-      <Material/>
+      {/* <Register/> */}
+    <Admin/>
+    
+      {/* <SignIn/> */}
+      
     </div>
   );
 }

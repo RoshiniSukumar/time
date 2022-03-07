@@ -17,18 +17,18 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://mui.com/" underline='none'>
+        19BCM0
       </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {/* {new Date().getFullYear()} */}
+      {/* {'.'} */}
     </Typography>
   );
 }
 
 const theme = createTheme();
 
-export default function Material() {
+export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -85,9 +85,8 @@ export default function Material() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Username"
                   name="email"
-                  autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -102,11 +101,11 @@ export default function Material() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+                /> */}
+            </Grid>
             </Grid>
             <Button
               type="submit"
@@ -116,16 +115,10 @@ export default function Material() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+           
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <Copyright sx={{ mt: 25 }} />
       </Container>
     </ThemeProvider>
   );
