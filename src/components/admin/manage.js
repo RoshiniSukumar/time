@@ -14,11 +14,12 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
+import CancelIcon from '@mui/icons-material/Cancel';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Cards from './cards'
+
 // yyy
 function Copyright(props) {
   return (
@@ -115,7 +116,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Manage Accounts
             </Typography>
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -157,10 +158,62 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
-            {/* <Grid container spacing={3}>
-              {/* Chart *
-              <Grid item xs={12} md={8} lg={9}>
+          <Container maxWidth="lg" sx={{ mt: 5, mb: 4}}>
+            <Grid container spacing={3}>
+              {/* Chart  */}
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 70,
+                  }}
+                >
+           {/* <Chart />  */}
+           <Box sx={{ display: 'flex', px: 5,pl:6, fontFamily:'default',fontSize:27}}>
+           <Box sx={{ display: 'flex', px: 5}}>
+           S.No 
+          </Box>
+          <Box sx={{ display: 'flex', px: 5}}>
+           NAME </Box>
+          {/* <Box sx={{display: 'flex',pr:50}}>         */}
+          <Box sx={{display: 'flex', pl:80, fontFamily:'default',fontSize:27}}>
+             DELETE 
+         </Box></Box>
+          </Paper>
+              </Grid>
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 70,
+                  }}
+                >
+           {/* <Chart />  */}
+           <Box sx={{ display: 'flex', px: 5,fontFamily:'default'}}>
+           <Box sx={{ display: 'flex', px: 5,fontSize:25,pl:8}}>
+           01
+          </Box>
+          <Box sx={{ display: 'flex', px: 5, fontSize:25,pl:7,fontFamily:'default'}}>
+          {/* <Box sx={{  }}> */}
+          Revathi</Box>
+          {/* <Box sx={{display: 'flex',pr:50}}>         */}
+          <Box sx={{display: 'flex', pl:83}}>
+          <IconButton color="inherit">
+              {/* <Badge badgeContent={4} color="secondary"> */}
+                <CancelIcon />
+              {/* </Badge> */}
+            </IconButton>
+            {/* <h4>DELETE</h4> */}
+         </Box></Box>
+          </Paper>
+              </Grid>
+            
+           {/* Recent Deposits  */}
+              {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
@@ -169,31 +222,18 @@ function DashboardContent() {
                     height: 240,
                   }}
                 >
-                  {/* <Chart /> *
+                <Deposits /> 
                 </Paper>
               </Grid>
-              {/* Recent Deposits *
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Deposits /> *
-                </Paper>
-              </Grid>
-              {/* Recent Orders *
+             Recent Orders 
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> 
-                </Paper>
+                   <Orders /> 
+                </Paper> */}
               </Grid>
-            </Grid> */}
-            <Cards />
-            <Copyright sx={{ pt: 18 }} />
+            {/* </Grid>  */}
+            
+            <Copyright sx={{position:"relative" }} />
           </Container>
         </Box>
       </Box>
