@@ -2,8 +2,9 @@ import './App.css';
 import React from "react";
 import SignIn from './components/login/signin'
 import Register from './components/signup/register'
-// import Admin from './components/admin/admin'
+import Admin from './components/admin/admin'
 import Manages from './components/admin/manage'
+import Views from './components/view/views'
 // import {BrowserRouter,Route,Switch} from "react-router-dom"
 export default function App() {
   return (
@@ -12,7 +13,7 @@ export default function App() {
       {/* <Route exact path="/" component={Admin} /> */}
 {/* <Switch> */}
 {/* <Route exact path ="/"> */}
-<Manages/></div>
+<Views/></div>
 // {/* </Route> */}
 // <Route exact path ="/login">
 // <SignIn />
