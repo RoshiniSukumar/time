@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems } from '../timetable/listItems';
 import View from './view'
 // yyy
 function Copyright(props) {
@@ -193,7 +193,7 @@ function DashboardContent() {
               </Grid>
             </Grid> */}
             <View />
-            <Copyright sx={{ pt: 18 }} />
+            <Copyright sx={{ pt: 10}} />
           </Container>
         </Box>
       </Box>

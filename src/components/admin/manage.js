@@ -15,11 +15,12 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
+
 import CancelIcon from '@mui/icons-material/Cancel';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, secondaryListItems } from '../timetable/listItems';
 import Tables from "./tables"
 // yyy
 function Copyright(props) {
@@ -119,7 +120,7 @@ function DashboardContent() {
             >
               Manage Accounts
             </Typography>
-            <IconButton color="inherit" sx={{display:'flex'}}>
+            <IconButton color="inherit" sx={{display:'flex'}} component='a' href='http://localhost:3000/tt/register'>
             {/* <Box> */}
             {/* <Button variant="outlined" startIcon={<AddIcon />}> */}
   {/* Add Account */}
