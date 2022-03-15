@@ -2,8 +2,14 @@ import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
+import logo from '../../assets/logo.fw.png'
 import Box from '@mui/material/Box';
+import psgcas from '../../assets/PSG-College-of-Arts-Science.jpg'
+import { Button, CardActionArea, CardActions } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -17,8 +23,9 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Creates from './creates'
+// import { Button } from '@mui/material';
+// import { mainListItems, secondaryListItems } from './listItems';
+// import Creates from './creates'
 // import Text from './text'
 // yyy
 function Copyright(props) {
@@ -91,13 +98,13 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute">
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              pr: '2px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
+            {/* <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
@@ -108,8 +115,8 @@ function DashboardContent() {
               }}
             >
               <MenuIcon />
-            </IconButton>
-            <Typography
+            </IconButton>*/}
+            {/* <Typography 
               component="h1"
               variant="h6"
               color="inherit"
@@ -117,7 +124,21 @@ function DashboardContent() {
               sx={{ flexGrow: 1 }}
             >
              Create  Docket 
-            </Typography>
+            </Typography> */}
+            <card sx={{ maxWidth: 500 }}><CardMedia
+        component="img"
+        sx={{ width: 351 }}
+        image={logo}
+        alt="Logo"
+      />
+      </card><Box sx={{pl:150}}><card ><CardActions>
+      <Button size="large" color="error">
+        Login
+      </Button>
+    </CardActions></card></Box>
+    
+      {/* <Button>Login</Button> */}
+            {/* <img src={logo}  nowrap sx={{width: 0}}/> */}
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -125,7 +146,7 @@ function DashboardContent() {
             </IconButton> */}
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open} >
+        {/* <Drawer variant="permanent" open={open} >
           <Toolbar
             sx={{
               display: 'flex',
@@ -134,17 +155,17 @@ function DashboardContent() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav" sx={{ pr: 0 }} >
-            {mainListItems}
-            <Divider  />
+            {/* <IconButton onClick={toggleDrawer}> */}
+              {/* <ChevronLeftIcon /> */}
+            {/* </IconButton> */} 
+          {/* </Toolbar> */}
+          {/* <Divider /> */}
+          {/* <List component="nav" sx={{ pr: 0 }} > */}
+            {/* {mainListItems} */}
+            {/* <Divider  /> */}
             {/* {secondaryListItems} */}
-          </List>
-        </Drawer>
+          {/* </List> */}
+        {/* </Drawer> */}
         <Box
           component="main"
           sx={{
@@ -157,8 +178,17 @@ function DashboardContent() {
             overflow: 'auto',
           }}
         >
-          <Toolbar />
+          {/* <Toolbar /> */}
           <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
+          <Box>
+    <card sx={{pl:0, ml:0, position:'relative',left:0}}><CardMedia
+        component="img"
+        sx={{ width: 1501 }}
+        image={psgcas}
+        alt="Psgcas"
+      />
+      </card>
+    </Box>
             {/* <Grid container spacing={3}>
               {/* Chart *
               <Grid item xs={12} md={8} lg={9}>
@@ -170,6 +200,7 @@ function DashboardContent() {
                     height: 240,
                   }}
                 >
+                
                   {/* <Chart /> *
                 </Paper>
               </Grid>

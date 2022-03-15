@@ -1,0 +1,8 @@
+important things to do
+
+
+remove unwanted comments
+clear warnings
+maintain a file structure
+copyrights linking
+

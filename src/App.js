@@ -6,6 +6,7 @@ import Register from './components/signup/register'
 import Admin from './components/admin/admin'
 import Manages from './components/admin/manage'
 import Views from './components/view/views'
+import Home from './components/home/home'
 import Front from './components/timetable/front'
 export default function App() {
   return (
@@ -14,7 +15,8 @@ export default function App() {
      
      <>
 <Switch>
-<Route exact path ="/create_docket" component={Front}/> 
+<Route exact path ="/" component={Home}/> 
+<Route  path ="/create_docket" component={Front}/> 
 <Route  path ="/signin" component={SignIn}/> 
 <Route  path ="/manage_account" component={Manages}/> 
 <Route  path ="/admin" component={Admin}/> 
