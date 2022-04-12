@@ -2,40 +2,28 @@ import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
-import logo from '../../assets/logo.fw.png'
 import Box from '@mui/material/Box';
-import psgcas from '../../assets/PSG-College-of-Arts-Science.jpg'
-import { Button, CardActionArea, CardActions } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-// import { Button } from '@mui/material';
-// import { mainListItems, secondaryListItems } from './listItems';
-// import Creates from './creates'
-// import Text from './text'
-// yyy
+import { mainListItems} from './listItems';
+import Staff from './staff';
+import Fixedhrs from './fixedhrs'
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/" underline="none">
       19BCM040, 19BCM041, 19BCM002     </Link>{' '}
-      {/* {new Date().getFullYear()} */}
-      {/* {'.'} */}
+    
     </Typography>
   );
 }
@@ -98,13 +86,13 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute">
+        <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: '2px', // keep right padding when drawer closed
+              pr: '24px', 
             }}
           >
-            {/* <IconButton
+            <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
@@ -115,8 +103,8 @@ function DashboardContent() {
               }}
             >
               <MenuIcon />
-            </IconButton>*/}
-            {/* <Typography 
+            </IconButton>
+            <Typography
               component="h1"
               variant="h6"
               color="inherit"
@@ -124,29 +112,11 @@ function DashboardContent() {
               sx={{ flexGrow: 1 }}
             >
              Create  Docket 
-            </Typography> */}
-            <card sx={{ maxWidth: 500 }}><CardMedia
-        component="img"
-        sx={{ width: 351 }}
-        image={logo}
-        alt="Logo"
-      />
-      </card><Box sx={{pl:150}}><card ><CardActions>
-      <Button size="large" color="error">
-        Login
-      </Button>
-    </CardActions></card></Box>
-    
-      {/* <Button>Login</Button> */}
-            {/* <img src={logo}  nowrap sx={{width: 0}}/> */}
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+            </Typography>
+            
           </Toolbar>
         </AppBar>
-        {/* <Drawer variant="permanent" open={open} >
+        <Drawer variant="permanent" open={open} >
           <Toolbar
             sx={{
               display: 'flex',
@@ -155,17 +125,16 @@ function DashboardContent() {
               px: [1],
             }}
           >
-            {/* <IconButton onClick={toggleDrawer}> */}
-              {/* <ChevronLeftIcon /> */}
-            {/* </IconButton> */} 
-          {/* </Toolbar> */}
-          {/* <Divider /> */}
-          {/* <List component="nav" sx={{ pr: 0 }} > */}
-            {/* {mainListItems} */}
-            {/* <Divider  /> */}
-            {/* {secondaryListItems} */}
-          {/* </List> */}
-        {/* </Drawer> */}
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Toolbar>
+          <Divider />
+          <List component="nav" sx={{ pr: 0 }} >
+            {mainListItems}
+            <Divider  />  
+          </List>
+        </Drawer>
         <Box
           component="main"
           sx={{
@@ -178,59 +147,22 @@ function DashboardContent() {
             overflow: 'auto',
           }}
         >
-          {/* <Toolbar /> */}
-          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
-          <Box>
-    <card sx={{pl:0, ml:0, position:'relative',left:0}}><CardMedia
-        component="img"
-        sx={{ width: 1501 }}
-        image={psgcas}
-        alt="Psgcas"
-      />
-      </card>
-    </Box>
-            {/* <Grid container spacing={3}>
-              {/* Chart *
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                
-                  {/* <Chart /> *
-                </Paper>
-              </Grid>
-              {/* Recent Deposits *
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Deposits /> *
-                </Paper>
-              </Grid>
-              {/* Recent Orders *
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> 
-                </Paper>
-              </Grid>
-            </Grid> */}
-            {/* <Text />    */}
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 5, mb: 4 }}>
+ <Box sx={{m:5}}>
+ {/* <Grid container spacing={3} SX={{bgcolor: 'primary.main'}}> */}
+    {/* <Grid item  xs={12} md={6} lg={3} sx={{position:'relative',right:50}}  > */}
+            <Staff  />
+            {/* </Grid> */}
+            {/* <Grid item  xs={12} md={6} lg={3} sx={{position:'relative',left:300}}  > */}
+            <Fixedhrs  />
+            {/* </Grid> */}
+            {/* </Grid> */}
+            </Box>
             <Copyright sx={{ pt: 10}} />
           </Container>
         </Box>
-        {/* <Dynamic/> */}
       </Box>
-      {/* <Dynamic/> */}
     </ThemeProvider>
   );
 }

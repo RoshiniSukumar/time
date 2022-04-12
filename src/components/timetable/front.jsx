@@ -18,8 +18,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Creates from './creates'
-// import Text from './text'
+import SeasonScore from './SeasonScore'
+import Inp2 from './inp2'
+import Inp3 from './inp3'
+import Inp4 from './inp4'
+import Creates from './text'
 // yyy
 function Copyright(props) {
   return (
@@ -159,6 +162,7 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
+            {/* <Creates/> */}
             {/* <Grid container spacing={3}>
               {/* Chart *
               <Grid item xs={12} md={8} lg={9}>
@@ -193,11 +197,23 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid> */}
-            {/* <Text />    */}
+            <Creates/>
+            <Box sx={{pl:0,}}>
+            <Grid container spacing={3} SX={{bgcolor: 'primary.main',pl:50}}>
+    <Grid item  xs={12} md={6} lg={3} sx={{pl:200}}  >
+            
+            <SeasonScore/>  
+            </Grid>
+            <Grid item  xs={12} md={6} lg={3}  >
+            <Inp2 /> </Grid>
+            <Grid item  xs={12} md={6} lg={3}  >
+            <Inp3 /></Grid>
+            <Grid item  xs={12} md={6} lg={3}  >
+            <Inp4 /></Grid></Grid></Box>
             <Copyright sx={{ pt: 10}} />
           </Container>
         </Box>
-        {/* <Dynamic/> */}
+        {/* <Createg/> */}
       </Box>
       {/* <Dynamic/> */}
     </ThemeProvider>

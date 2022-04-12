@@ -10,15 +10,24 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import {makeStyles} from '@material-ui/core/styles'
+import { padding } from '@mui/system';
+import { blueGrey } from '@mui/material/colors';
+// const useStyles = makeStyles((theme)=>{
+//     pad:{
+        // backgroundColor: theme.palette.background.paper
+//         // padding: theme.spacing(8,0,6)
+//     }
+// });
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/" underline='none'>
-        19BCM0
+        19BCM040 19BCM041 19BCM002
       </Link>{' '}
       {/* {new Date().getFullYear()} */}
       {/* {'.'} */}
@@ -28,7 +37,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Register() {
+export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -41,6 +50,7 @@ export default function Register() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Card maxWidth="sm">
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -55,71 +65,59 @@ export default function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign in
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Username"
-                  name="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                {/* <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                /> */}
-            </Grid>
-            </Grid>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Username"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            {/* <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            /> */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign In
             </Button>
-           
+            <Grid container spacing={4}>
+             <Grid item></Grid>
+              <Grid item align="center" >
+                <Link align='center' href="#" variant="body2" underline='none'>
+                  {"Don't have an account?"}
+                </Link>
+              </Grid>
+              <Grid item xs>
+                <Link href="http://localhost:3000/tt/register" variant="body2" underline='none'>
+                Sign Up
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 25 }} />
+        <Copyright sx={{ mt: 25, mb: 4 }} />
       </Container>
+      </Card>
     </ThemeProvider>
   );
 }
