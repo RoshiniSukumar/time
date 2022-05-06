@@ -4,12 +4,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignIn from './components/login/signin'
 import Register from './components/signup/register'
 import Admin from './components/admin/admin'
+import Stafflist from "./components/admin/stafflist"
+import Clslist from "./components/admin/clslist"
+import Corelist from "./components/admin/corelist"
+import Alliedlist from "./components/admin/alliedlist"
 import Manages from './components/admin/manage'
 import Views from './components/view/views'
 import Home from './components/home/home'
 import Front from './components/timetable/front'
 import Docket2 from './components/timetable/docket2'
-// import Hello from './components/Hello';
+import Text from './components/signup/text';
 // import Creates from './components/timetable/Creates';
 export default function App() {
 
@@ -46,9 +50,11 @@ export default function App() {
         />  <Route path = "/view_docket"
         component = { Views }/> 
         <Route path="/create_docket2" component={Docket2} />
-
-
-
+        <Route path ="/stafflist" component={Stafflist}/>
+        <Route path ="/clslist" component={Clslist}/>
+        <Route path ="/corelist" component={Corelist}/>
+        <Route path ="/aliiedlist" component={Alliedlist}/>
+        <Route path ="/text" component={Text}/>
 
         </Switch> </> </Router>
     );

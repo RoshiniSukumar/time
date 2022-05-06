@@ -5,11 +5,13 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import axios from 'axios';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -17,12 +19,8 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import SeasonScore from './SeasonScore'
-import Inp2 from './inp2'
-import Inp3 from './inp3'
-import Inp4 from './inp4'
-import Creates from './text'
+import { mainListItems, secondaryListItems } from '../timetable/listItems';
+import Cards from './cards'
 // yyy
 function Copyright(props) {
   return (
@@ -35,7 +33,16 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const deletepost = ()=>{
+  window.confirm("Are you sure you want to delete?")
+  axios.delete( "http://localhost:2000/docket")
+  axios.delete( "http://localhost:2000/core")
+  axios.delete( "http://localhost:2000/cls")
+  axios.delete( "http://localhost:2000/staff")
+  axios.delete( "http://localhost:2000/fixed")
+  axios.delete( "http://localhost:2000/allied")
+window.alert("data hae been deleted")
+}
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -119,14 +126,11 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             Create  Docket 
+              Dashboard
             </Typography>
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+            
           </Toolbar>
+          
         </AppBar>
         <Drawer variant="permanent" open={open} >
           <Toolbar
@@ -162,7 +166,6 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
-            {/* <Creates/> */}
             {/* <Grid container spacing={3}>
               {/* Chart *
               <Grid item xs={12} md={8} lg={9}>
@@ -197,26 +200,12 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid> */}
-            <Creates/>
-            <Box sx={{pl:0,}}>
-            <Grid container spacing={3} SX={{bgcolor: 'primary.main',pl:50}}>
-    <Grid item  xs={12} md={6} lg={3} sx={{pl:200}}  >
-            
-            <SeasonScore/>  
-            </Grid>
-            {/* {console.log(Inp2.totaltextbox)} */}
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp2 /> </Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp3 /></Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp4 /></Grid></Grid></Box>
-            <Copyright sx={{ pt: 10}} />
+
+            {/* <Cards /> */}
+            <Copyright sx={{ pt: 18 }} />
           </Container>
         </Box>
-        {/* <Createg/> */}
       </Box>
-      {/* <Dynamic/> */}
     </ThemeProvider>
   );
 }

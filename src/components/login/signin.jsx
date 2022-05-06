@@ -1,4 +1,5 @@
-import * as React from 'react';
+import  React,{useState} from 'react';
+import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,6 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {makeStyles} from '@material-ui/core/styles'
 import { padding } from '@mui/system';
 import { blueGrey } from '@mui/material/colors';
+
 // const useStyles = makeStyles((theme)=>{
 //     pad:{
         // backgroundColor: theme.palette.background.paper
@@ -38,6 +40,40 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  var arw2 = async (e) => {
+    e.preventDefault();
+    const arrayform2 = {
+      username: username,
+      password: password,
+    };
+    console.log(arrayform2);
+    let Data = await axios.post(
+      "http://localhost:2000/login",
+      arrayform2
+    );
+    if (Data.data.err == "Username Not Exists") {
+      alert("Username not exists");
+    }
+    if (Data.data.err == "Password Incorrect") {
+      alert("Password Incorrect");
+      console.log(Data.data.err);
+    }
+    if (Data.data.err == null) {
+      alert(" Welcomes you!!!");
+      window.open("http://localhost:3000/tt/", "_self");
+      console.log(Data.data.err);
+    }
+    console.log(Data.data.err);
+    console.log(Data);
+    // if (Data.status == 204) {
+    //   setLogin(true);
+    //   cookies.set("user", usr);
+    //   cookies.set("login", "true");
+    //   window.open("http://localhost:3000/Farmhaat/", "_self");
+    // }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -77,6 +113,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setusername(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -87,6 +124,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setpassword(e.target.value)}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -97,6 +135,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={arw2}
             >
               Sign In
             </Button>

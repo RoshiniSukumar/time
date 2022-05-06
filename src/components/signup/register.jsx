@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,12 +8,23 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Text from './text'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
+
 
 function Copyright(props) {
+  
+  
+
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -29,6 +40,34 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Register() {
+  const [ firstname, setfirstname] = useState("")
+  const [ lastname, setlastname] = useState("")
+  const [ username, setusername] = useState("")
+  const [ password, setpassword] = useState("")
+  const [values, setvalues] = useState("")
+  var arrw3 = async () => {
+    const arrayform3 = {
+      firstname: firstname,
+      lastname: lastname,
+      username: username,
+      password: password,
+    };
+    console.log(arrayform3);
+    let reg = await axios.post(
+      "http://localhost:2000/register",
+      arrayform3
+    );
+    console.log(reg.data.err)
+    if (reg.data.err == null) {
+    alert("Account Registerd!");
+      window.open("http://localhost:3000/tt/", "_self");
+    }
+    else if(reg.data.err=="err"){
+       alert("Please fill all the fields");
+    }
+    
+};
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,7 +77,33 @@ export default function Register() {
       password: data.get('password'),
     });
   };
+const checks = ()=>{
+  if(values==="Tutor"){
+   {<input/>
+  }
+  console.log("calks")  
+  console.log(values)
+  }
 
+else{
+  console.log("else")
+}}
+const calks = ()=>{
+  <div>
+    {/* {console.log("im in")} */}
+    {/* <TextField
+    required
+    fullWidth
+    name="password"
+    label="Password"
+    type="password"
+    id="password"
+    autoComplete="new-password"
+    onChange={(e) => setpassword(e.target.value)}
+    /> */}
+    <Text/>
+  </div>
+}
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -63,11 +128,12 @@ export default function Register() {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
-                  required
                   fullWidth
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={(e) => setfirstname(e.target.value)}
+                  required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -78,15 +144,17 @@ export default function Register() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={(e) => setlastname(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
+                  id="username"
                   label="Username"
-                  name="email"
+                  name="username"
+                  onChange={(e) => setusername(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -98,7 +166,28 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => setpassword(e.target.value)}
                 />
+              </Grid>
+              <Grid item xs={12}>
+              <FormControl>
+  <FormLabel id="demo-radio-buttons-group-label">Designation</FormLabel>
+  <RadioGroup
+    aria-labelledby="demo-radio-buttons-group-label"
+    defaultValue="Staff"
+    name="radio-buttons-group"
+  >
+    <FormControlLabel value="Staff" control={<Radio />} onChange={(e) => setvalues(e.target.value)} label="Staff" />
+    <FormControlLabel value="Tutor" control={<Radio />}  onChange={(e) => setvalues(e.target.value)} label="Tutor" />
+    <FormControlLabel value="Head" control={<Radio />} onChange={(e) => setvalues(e.target.value)} label="Head" />
+  </RadioGroup>
+  {/* {console.log(values)} */}
+  {/* if(values==="Tutor"){ */}
+    {/* // <input/> */}
+  {/* // } */}
+  {/* <Text/> */}
+    {checks()}
+  </FormControl>
               </Grid>
               <Grid item xs={12}>
                 {/* <FormControlLabel
@@ -112,6 +201,7 @@ export default function Register() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={arrw3}
             >
               Sign Up
             </Button>

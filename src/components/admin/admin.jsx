@@ -5,11 +5,13 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import axios from 'axios';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -31,7 +33,16 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const deletepost = ()=>{
+  window.confirm("Are you sure you want to delete?")
+  axios.delete( "http://localhost:2000/docket")
+  axios.delete( "http://localhost:2000/core")
+  axios.delete( "http://localhost:2000/cls")
+  axios.delete( "http://localhost:2000/staff")
+  axios.delete( "http://localhost:2000/fixed")
+  axios.delete( "http://localhost:2000/allied")
+window.alert("data hae been deleted")
+}
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -117,12 +128,14 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+            <IconButton color="inherit" onClick={deletepost}>
+              <Badge badgeContent={0} color="secondary">
+                <DeleteIcon />
+                <Typography>Delete </Typography>
               </Badge>
-            </IconButton> */}
+            </IconButton>
           </Toolbar>
+          
         </AppBar>
         <Drawer variant="permanent" open={open} >
           <Toolbar
@@ -192,6 +205,7 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid> */}
+
             <Cards />
             <Copyright sx={{ pt: 18 }} />
           </Container>

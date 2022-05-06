@@ -1,15 +1,18 @@
-import * as React from 'react';
+import React from 'react';
+import { useState,useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import axios from 'axios';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -17,14 +20,40 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import SeasonScore from './SeasonScore'
-import Inp2 from './inp2'
-import Inp3 from './inp3'
-import Inp4 from './inp4'
-import Creates from './text'
+import { mainListItems, secondaryListItems } from '../timetable/listItems';
+import Cards from './cards'
+
+// import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+const rows = [
+  createData('India', 'IN'),
+  
+  
+];
+
+const columns = [
+  { id: 'StaffCode', label: 'Staff Code', minWidth: 250 },
+  { id: 'StaffName', label: 'Staff Name', minWidth: 100 },
+  
+];
+
+function createData(StaffCode,StaffName) {
+  // const density = population / size;
+  return {StaffCode,StaffName };
+}
+
+
+
+
 // yyy
 function Copyright(props) {
+  
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -35,7 +64,16 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const deletepost = ()=>{
+  window.confirm("Are you sure you want to delete?")
+  axios.delete( "http://localhost:2000/docket")
+  axios.delete( "http://localhost:2000/core")
+  axios.delete( "http://localhost:2000/cls")
+  axios.delete( "http://localhost:2000/staff")
+  axios.delete( "http://localhost:2000/fixed")
+  axios.delete( "http://localhost:2000/allied")
+window.alert("data hae been deleted")
+}
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -85,11 +123,40 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+  const [arroget, setarroget] = useState([])
+  const [lastarray, setlastarray] = useState([])
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+  useEffect(async () => {
+    var getarray = await axios.get("http://localhost:2000/staff");
+    var filtere = getarray.data;
+    setarroget(filtere);
+    console.log("filterew", arroget);
+    var final = arroget[arroget.length-1];
+    setlastarray(final.arr);
+    console.log(lastarray,"arr");
+    console.log(lastarray.arr,"last");
+    
+  }, []);
+  var get1 = lastarray.map((get) => (
+    <div>
+      <TableRow hover role="checkbox" tabIndex={-1}>
+        {/* {get.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)} */}
+    <TableCell>{get}</TableCell></TableRow></div>
+    ));
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -119,14 +186,11 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             Create  Docket 
+              Dashboard
             </Typography>
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+            
           </Toolbar>
+          
         </AppBar>
         <Drawer variant="permanent" open={open} >
           <Toolbar
@@ -161,8 +225,66 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
-            {/* <Creates/> */}
+          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 ,mr:5}}>
+
+          <Paper sx={{ width: '70%' }}>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={2}>
+                Staff Details
+              </TableCell>
+              {/* <TableCell align="center" colSpan={3}>
+                Details
+              </TableCell> */}
+            </TableRow>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ top: 57, minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* {lastarray
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })} */}
+{get1}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper> 
             {/* <Grid container spacing={3}>
               {/* Chart *
               <Grid item xs={12} md={8} lg={9}>
@@ -197,26 +319,12 @@ function DashboardContent() {
                 </Paper>
               </Grid>
             </Grid> */}
-            <Creates/>
-            <Box sx={{pl:0,}}>
-            <Grid container spacing={3} SX={{bgcolor: 'primary.main',pl:50}}>
-    <Grid item  xs={12} md={6} lg={3} sx={{pl:200}}  >
-            
-            <SeasonScore/>  
-            </Grid>
-            {/* {console.log(Inp2.totaltextbox)} */}
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp2 /> </Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp3 /></Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp4 /></Grid></Grid></Box>
-            <Copyright sx={{ pt: 10}} />
+
+            {/* <Cards /> */}
+            <Copyright sx={{ pt: 18 }} />
           </Container>
         </Box>
-        {/* <Createg/> */}
       </Box>
-      {/* <Dynamic/> */}
     </ThemeProvider>
   );
 }

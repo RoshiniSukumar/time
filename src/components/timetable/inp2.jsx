@@ -2,7 +2,12 @@ import React from "react";
 import TextField from '@mui/material/TextField';
 import Button from '@material-ui/core/Button'
 import Box from '@mui/material/Box';
+import axios from "axios";
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+// import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useState,useEffect } from "react";
 export default function Inp2() {
   const [value, setValue] = React.useState("");
@@ -14,12 +19,25 @@ export default function Inp2() {
     textData1[i2] = e2.target.value;
     setTotalTextBox1(textData1);
   };
-  
+  let removeFormFields = (i) => {
+    let newFormValues1 = [...totaltextBox1];
+    newFormValues1.splice(i, 1);
+    setTotalTextBox1(newFormValues1)
+}
 console.log(totaltextBox1)
   const addField1 = () => {
     const textData1 = [...totaltextBox1];
     textData1.push("");
     setTotalTextBox1(textData1);
+
+    const arrayform6 = {
+      arr: totaltextBox1
+    };
+    console.log(arrayform6);
+    let reg1 =  axios.post(
+      "http://localhost:2000/staff",
+      arrayform6
+    );
    
   };
   
@@ -37,16 +55,24 @@ addField1()
     <Grid container spacing={3} SX={{bgcolor: 'primary.main',pt:5}}>
     <Grid item  xs={12} md={6} lg={3}  > */}
       {totaltextBox1.map((item, index) => ( 
+        <div>
         <TextField  
         id="outlined-required"
         label="Name of the staff" 
-       value={item} onChange={(e) => handleChange1(e, index)} sx={{mt:5}}   />  
+       value={item} onChange={(e) => handleChange1(e, index)} sx={{mt:5}}   /> {index ? 
+        <IconButton type="button"  className="button remove" onClick={() => removeFormFields(index)}
+         style={{ position:'relative',left:'105px',  bottom:'50px' ,border:"none", color:'black',borderRadius:'50px' ,padding:'1px ',fontSize:'10px',fontWeight:'bold' }}
+        ><HighlightOffIcon/></IconButton> 
+      : null}
+      </div> 
       ))}
       {/* </Grid>
       </Grid>
       </Box> */}
-      <Box sx={{pt:5}}>
-      <button  onClick={addField1}   style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 15px',fontSize:'25px',fontWeight:'bold' }}>ADD</button>
+      <Box sx={{pt:3.5}}>
+      <IconButton  onClick={addField1}   style={{ position:'relative', right:'0px', top:'10px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 15px',fontSize:'25px',fontWeight:'bold' }}>
+        <AddBoxIcon/>
+      </IconButton>
      </Box>
     </div>
   );
