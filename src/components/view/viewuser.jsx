@@ -9,19 +9,17 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Cookies from 'universal-cookie';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
  
-import { mainListItems, secondaryListItems } from './listItems';
-import SeasonScore from './SeasonScore'
-import Inp2 from './inp2'
-import Inp3 from './inp3'
-import Inp4 from './inp4'
-import Creates from './text'
+import { mainListItems, secondaryListItems } from '../timetable/listItems';
+import {getFixClass} from "./servies"
+
+import View from './view'
  
 function Copyright(props) {
   return (
@@ -83,19 +81,26 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+const cookies = new Cookies();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  var logouts = () => {
+    cookies.set("login", "false");
+    cookies.set("user", "User");
+    window.open('http://localhost:3000/tt/','_self')
+  };
+ 
 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" >
           <Toolbar
             sx={{
-              pr: '24px',  
+              pr: '0px', // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -104,7 +109,7 @@ function DashboardContent() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
+                marginRight: '0px',
                 ...(open && { display: 'none' }),
               }}
             >
@@ -117,31 +122,14 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             Create  Docket 
+              View
             </Typography>
-            
+            <Button size="large" variant="contained" color="secondary" onClick={logouts} >
+        Logout
+      </Button>
+
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open} >
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav" sx={{ pr: 0 }} >
-            {mainListItems}
-            <Divider  />
-            
-          </List>
-        </Drawer>
         <Box
           component="main"
           sx={{
@@ -156,27 +144,13 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
-            
-            <Creates/>
-            <Box sx={{pl:0,}}>
-            <Grid container spacing={3} SX={{bgcolor: 'primary.main',pl:50}}>
-    <Grid item  xs={12} md={6} lg={3} sx={{pl:200}}  >
-            
-            <SeasonScore/>  
-            </Grid>
              
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp2 /> </Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp3 /></Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp4 /></Grid></Grid></Box>
+            
+            <View />
             <Copyright sx={{ pt: 10}} />
           </Container>
         </Box>
-         
       </Box>
-     
     </ThemeProvider>
   );
 }

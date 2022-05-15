@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Cookies from "universal-cookie";
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,12 +19,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import { padding } from '@mui/system';
 import { blueGrey } from '@mui/material/colors';
 
-// const useStyles = makeStyles((theme)=>{
-//     pad:{
-        // backgroundColor: theme.palette.background.paper
-//         // padding: theme.spacing(8,0,6)
-//     }
-// });
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,8 +27,7 @@ function Copyright(props) {
       <Link color="inherit" href="https://mui.com/" underline='none'>
         19BCM040 19BCM041 19BCM002
       </Link>{' '}
-      {/* {new Date().getFullYear()} */}
-      {/* {'.'} */}
+    
     </Typography>
   );
 }
@@ -40,8 +35,17 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const cookies = new Cookies();
+  const [usr, setusr] = useState("");
+  const [pass, setpass] = useState("");
+  const [Login, setLogin] = useState(false);
+  cookies.set("login", "false");
+  cookies.set("user", "User");
+  // var cookie = cookies.get("login");
+  
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+
   var arw2 = async (e) => {
     e.preventDefault();
     const arrayform2 = {
@@ -62,31 +66,39 @@ export default function SignIn() {
     }
     if (Data.data.err == null) {
       alert(" Welcomes you!!!");
-      window.open("http://localhost:3000/tt/", "_self");
+      // window.open("http://localhost:3000/tt/", "_self");
       console.log(Data.data.err);
     }
     console.log(Data.data.err);
     console.log(Data);
-    // if (Data.status == 204) {
-    //   setLogin(true);
-    //   cookies.set("user", usr);
-    //   cookies.set("login", "true");
-    //   window.open("http://localhost:3000/Farmhaat/", "_self");
-    // }
+    if (Data.status == 204) {
+      setLogin(true);
+      cookies.set("user", username);
+      cookies.set("login", "true");
+      var admincheck = cookies.get("user") === "Admin" ? "http://localhost:3000/tt/admin" : "http://localhost:3000/tt/view_user";
+      window.open(admincheck, "_self");
+      console.log(admincheck);
+    }
+   
   };
+// {  console.log(admincheck,cookies.get("user"))}
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
+    
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
   };
-
+  
+  
   return (
+  
+ 
+
     <ThemeProvider theme={theme}>
-      <Card maxWidth="sm">
+      {/* <Card maxWidth="x"> */}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -108,10 +120,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
+              // id="email"
               label="Username"
-              name="email"
-              autoComplete="email"
+              // name="email"
+              // autoComplete="email"
               autoFocus
               onChange={(e) => setusername(e.target.value)}
             />
@@ -126,10 +138,7 @@ export default function SignIn() {
               autoComplete="current-password"
               onChange={(e) => setpassword(e.target.value)}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
+           
             <Button
               type="submit"
               fullWidth
@@ -139,24 +148,19 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <Grid container spacing={4}>
-             <Grid item></Grid>
-              <Grid item align="center" >
-                <Link align='center' href="#" variant="body2" underline='none'>
-                  {"Don't have an account?"}
-                </Link>
-              </Grid>
-              <Grid item xs>
+            {/* <Grid container spacing={4}> */}
+             {/* <Grid item></Grid> */}
+              {/* <Grid item xs>
                 <Link href="http://localhost:3000/tt/register" variant="body2" underline='none'>
                 Sign Up
-                </Link>
-              </Grid>
-            </Grid>
+                </Link> */}
+              {/* </Grid> */}
+            {/* </Grid> */}
           </Box>
         </Box>
         <Copyright sx={{ mt: 25, mb: 4 }} />
       </Container>
-      </Card>
+      {/* </Card> */}
     </ThemeProvider>
   );
 }

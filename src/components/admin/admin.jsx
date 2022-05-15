@@ -13,37 +13,38 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
+import Cookies from 'universal-cookie';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from '../timetable/listItems';
 import Cards from './cards'
-// yyy
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/" underline="none">
       19BCM040, 19BCM041, 19BCM002     </Link>{' '}
-      {/* {new Date().getFullYear()} */}
-      {/* {'.'} */}
     </Typography>
   );
 }
+const cookies = new Cookies();
 const deletepost = ()=>{
   window.confirm("Are you sure you want to delete?")
-  axios.delete( "http://localhost:2000/docket")
-  axios.delete( "http://localhost:2000/core")
-  axios.delete( "http://localhost:2000/cls")
-  axios.delete( "http://localhost:2000/staff")
-  axios.delete( "http://localhost:2000/fixed")
-  axios.delete( "http://localhost:2000/allied")
+  // axios.delete( "http://localhost:2000/docket")
+  // axios.delete( "http://localhost:2000/core")
+  // axios.delete( "http://localhost:2000/cls")
+  axios.delete( "http://localhost:2000/teacher")
+  axios.delete( "http://localhost:2000/fixclass")
+  axios.delete( "http://localhost:2000/class")
 window.alert("data hae been deleted")
 }
 const drawerWidth = 240;
+var logouts = () => {
+  cookies.set("login", "false");
+  cookies.set("user", "User");
+  window.open('http://localhost:3000/tt/','_self')
+};
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -154,7 +155,6 @@ function DashboardContent() {
           <List component="nav" sx={{ pr: 0 }} >
             {mainListItems}
             <Divider  />
-            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box
@@ -171,41 +171,6 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
-            {/* <Grid container spacing={3}>
-              {/* Chart *
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Chart /> *
-                </Paper>
-              </Grid>
-              {/* Recent Deposits *
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Deposits /> *
-                </Paper>
-              </Grid>
-              {/* Recent Orders *
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> 
-                </Paper>
-              </Grid>
-            </Grid> */}
-
             <Cards />
             <Copyright sx={{ pt: 18 }} />
           </Container>

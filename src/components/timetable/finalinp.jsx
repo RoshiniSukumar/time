@@ -1,27 +1,30 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useState,useEffect } from "react";
+import axios from 'axios';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
+
+// import IconButton from '@mui/material/IconButton';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+ 
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
  
 import { mainListItems, secondaryListItems } from './listItems';
-import SeasonScore from './SeasonScore'
-import Inp2 from './inp2'
-import Inp3 from './inp3'
-import Inp4 from './inp4'
-import Creates from './text'
  
 function Copyright(props) {
   return (
@@ -83,6 +86,75 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+    const [value, setValue] = React.useState("");
+    const [val, setval] = useState("")
+    const [totaltextBox, setTotalTextBox] = React.useState([]);
+    const [sample, setSample] = React.useState(Array(3).fill(""));
+    var arrw3 = async () => {
+      const arrayform3 = {
+        className:value,
+        subject:
+          {
+            subjectName:val,
+            staffName:totaltextBox
+          }
+        
+      };
+      console.log(arrayform3);
+      let reg = await axios.post(
+        "http://localhost:2000/class",
+        arrayform3
+      );
+      console.log(reg.data.err)
+    if(reg.data.err==null){
+      
+      window.open('http://localhost:3000/tt/docket_inp2','_self')
+    }
+      
+  };
+   
+    const handleChange = (e2, i2) => {
+      const textData = [...totaltextBox];
+      textData[i2] = e2.target.value;
+      setTotalTextBox(textData);
+    }; 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      window.open('http://localhost:3000/tt/create_docket2','_self')
+       
+    };
+  
+    let removeFormFields = (i) => {
+      let newFormValues = [...totaltextBox];
+      newFormValues.splice(i, 1);
+      setTotalTextBox(newFormValues)
+  }
+  console.log(totaltextBox)
+    const addField = () => {
+      const textData = [...totaltextBox]
+      textData.push("");
+      setTotalTextBox(textData);
+       
+      const textData3 = [...totaltextBox];
+      textData3.push("");
+      setTotalTextBox(textData3);
+    //   const arrayform3 = {
+    //     arr: totaltextBox
+    //   };
+    //   console.log(arrayform3);
+    //   let reg =  axios.post(
+    //     "http://localhost:2000/class",
+    //     arrayform3
+    //   );
+    };
+     useEffect(() => {
+      
+  addField()
+  }, []);
+  
+    console.log(sample);
+    
+  
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -155,22 +227,79 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 20, mb: 4,mr:20}}>
+          < Box sx={{ display: 'flex',position:'relative',left:110}}>
+      <Grid container spacing={3} SX={{bgcolor: 'primary.main'}}>
+      <Grid item  xs={12} md={6} lg={3}>
+<TextField
+          required
+          id="outlined-required"
+          label="Name of the class"
+           
+          onChange={(e) => setValue(e.target.value)} 
+        />      
+        </Grid>
+        <Grid item  xs={12} md={6} lg={3}>
+        <TextField
+          required
+          id="outlined-required"
+          label="Name of the subject"
+          onChange={(e)=>setval(e.target.value)}
+        /></Grid>
+        <Grid item  xs={12} md={6} lg={3}>
+        {totaltextBox.map((item, index) => (
+        <div> 
+        <TextField  
+        id="outlined-required"
+        label="Name of the staff"
+        required 
+       value={item} onChange={(e) => handleChange(e, index)} sx={{mb:3}}   /> 
+       {index ? 
+        <IconButton type="button"  className="button remove" onClick={() => removeFormFields(index)}
+         style={{ position:'relative',left:'205px',  bottom:'65px', border:"none", color:'black',borderRadius:'50px' ,padding:'1px',fontSize:'25px',fontWeight:'bold' }}
+        ><HighlightOffIcon/></IconButton> 
+      : null} 
+       </div>
+      ))}
+       
+      <Box sx={{pt:3,pl:10}}>
+      <IconButton onClick={addField}  style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 15px',fontSize:'25px',fontWeight:'bold' }}>
+        <AddBoxIcon />
+      </IconButton>
+</Box>
+<Box sx={{pt:5}}>
+<button
+           
+           variant="contained" 
+           color="primary" 
+           type="submit" 
+            href="http://localhost:3000/tt/create_docket2"
+           style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 50px',fontSize:'15px',fontWeight:'bold' }}
+          
+           onClick={arrw3}
+           
+         >Submit and Add Subject</button>
+ 
+</Box>
+<Box sx={{pt:5, pl:0}}>
+<button
+           
+          variant="contained" 
+          color="primary" 
+          type="submit" 
+           href="http://localhost:3000/tt/create_docket2"
+          style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 50px',fontSize:'15px',fontWeight:'bold' }}   
+          onClick={()=>{window.open("http://localhost:3000/tt/docket_inp2","_self")}}
+          
+        >Next</button></Box>
+        
+        </Grid>
+
+        </Grid>
+        
+        </Box>
             
-            <Creates/>
-            <Box sx={{pl:0,}}>
-            <Grid container spacing={3} SX={{bgcolor: 'primary.main',pl:50}}>
-    <Grid item  xs={12} md={6} lg={3} sx={{pl:200}}  >
-            
-            <SeasonScore/>  
-            </Grid>
-             
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp2 /> </Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp3 /></Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp4 /></Grid></Grid></Box>
+           
             <Copyright sx={{ pt: 10}} />
           </Container>
         </Box>

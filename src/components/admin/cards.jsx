@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
@@ -22,7 +21,7 @@ export default function Cards() {
         image={staff}
       />
        <CardContent>
-        <Typography gutterBottom variant="h5" component="div" align='center'>
+        <Typography gutterBottom variant="h5" component="div" align='center' onClick={()=>{window.open("http://localhost:3000/tt/stafflist","_self")}}>
           Staff
         </Typography>
       </CardContent>
@@ -37,7 +36,7 @@ export default function Cards() {
         image={student}
       />
        <CardContent>
-        <Typography gutterBottom variant="h5" component="div" align='center'>
+        <Typography gutterBottom variant="h5" component="div" align='center'onClick={()=>{window.open("http://localhost:3000/tt/clslist","_self")}}>
         Class
         </Typography>
       </CardContent>
@@ -52,7 +51,7 @@ export default function Cards() {
         image={core}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div" align='center'>
+        <Typography gutterBottom variant="h5" component="div" align='center' onClick={()=>{window.open("http://localhost:3000/tt/corelist","_self")}}>
         Core
         </Typography>
       </CardContent>
@@ -67,7 +66,7 @@ export default function Cards() {
         image={allied}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div" align='center'>
+        <Typography gutterBottom variant="h5" component="div" align='center' onClick={()=>{window.open("http://localhost:3000/tt/alliedlist","_self")}}>
           Allied
         </Typography>
       </CardContent>

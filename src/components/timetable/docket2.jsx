@@ -150,14 +150,11 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 5, mb: 4 }}>
  <Box sx={{m:5}}>
- {/* <Grid container spacing={3} SX={{bgcolor: 'primary.main'}}> */}
-    {/* <Grid item  xs={12} md={6} lg={3} sx={{position:'relative',right:50}}  > */}
+  
             <Staff  />
-            {/* </Grid> */}
-            {/* <Grid item  xs={12} md={6} lg={3} sx={{position:'relative',left:300}}  > */}
+            
             <Fixedhrs  />
-            {/* </Grid> */}
-            {/* </Grid> */}
+            
             </Box>
             <Copyright sx={{ pt: 10}} />
           </Container>

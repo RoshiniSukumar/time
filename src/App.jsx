@@ -1,6 +1,8 @@
 import './App.css';
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {Provider} from "react-redux"
+import Viewuser from "./components/view/viewuser"
 import SignIn from './components/login/signin'
 import Register from './components/signup/register'
 import Admin from './components/admin/admin'
@@ -13,16 +15,16 @@ import Views from './components/view/views'
 import Home from './components/home/home'
 import Front from './components/timetable/front'
 import Docket2 from './components/timetable/docket2'
-import Text from './components/signup/text';
-// import Creates from './components/timetable/Creates';
+import Finalinp from './components/timetable/finalinp';
+import {store} from "./redux/store"
+ import Finalinp2 from "./components/timetable/finalinp2"
+ import Finalinp3 from "./components/timetable/finalinp3"
 export default function App() {
 
-// if(0===0)
-// {
-    // return <Creates/>
-// }
+ 
     return (
-
+<>
+<Provider store={store}>
         <Router basename = "/tt" >
 
         <>
@@ -53,9 +55,14 @@ export default function App() {
         <Route path ="/stafflist" component={Stafflist}/>
         <Route path ="/clslist" component={Clslist}/>
         <Route path ="/corelist" component={Corelist}/>
-        <Route path ="/aliiedlist" component={Alliedlist}/>
-        <Route path ="/text" component={Text}/>
-
+        <Route path ="/alliedlist" component={Alliedlist}/>
+        <Route path ="/docket_inp" component={Finalinp}/>
+        <Route path ="/docket_inp2" component={Finalinp2}/>
+        <Route path ="/docket_inp3" component={Finalinp3}/>
+        <Route path ="/view_user" component={Viewuser}/>
+    
         </Switch> </> </Router>
+        </Provider>
+        </>
     );
 }

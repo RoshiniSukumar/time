@@ -1,12 +1,12 @@
 import React from "react";
 import TextField from '@mui/material/TextField';
-import Button from '@material-ui/core/Button'
+ 
 import Box from '@mui/material/Box';
 import axios from "axios";
-import Grid from '@mui/material/Grid';
+ 
 import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-// import DeleteIcon from '@mui/icons-material/Delete';
+ 
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useState,useEffect } from "react";
 export default function Inp2() {
@@ -45,15 +45,13 @@ console.log(totaltextBox1)
   console.log(sample);
   
   useEffect(() => {
-    //check local token or something
+     
 addField1()
 }, []);
 
   return (
     <div className="App">
-    {/* <Box sx={{pt: 5}}>
-    <Grid container spacing={3} SX={{bgcolor: 'primary.main',pt:5}}>
-    <Grid item  xs={12} md={6} lg={3}  > */}
+ 
       {totaltextBox1.map((item, index) => ( 
         <div>
         <TextField  
@@ -66,9 +64,7 @@ addField1()
       : null}
       </div> 
       ))}
-      {/* </Grid>
-      </Grid>
-      </Box> */}
+      
       <Box sx={{pt:3.5}}>
       <IconButton  onClick={addField1}   style={{ position:'relative', right:'0px', top:'10px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 15px',fontSize:'25px',fontWeight:'bold' }}>
         <AddBoxIcon/>

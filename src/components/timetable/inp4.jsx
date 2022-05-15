@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
 import TextField from '@mui/material/TextField';
-import Button from '@material-ui/core/Button'
+ 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+ 
 import IconButton from '@mui/material/IconButton';
-// import DeleteIcon from '@mui/icons-material/Delete';
+// 
+
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useState,useEffect } from "react";
@@ -59,7 +60,7 @@ console.log(totaltextBox3)
   };
   
   useEffect(() => {
-    //check local token or something
+ 
 addField3()
 }, []);
   console.log(sample);
@@ -68,9 +69,7 @@ addField3()
 
   return (
     <div className="App">
-    {/* <Box sx={{pt: 5}}>
-    <Grid container spacing={3} SX={{bgcolor: 'primary.main',pt:5}}>
-    <Grid item  xs={12} md={6} lg={3}  > */}
+  
       {totaltextBox3.map((item, index) => ( 
         <div>
           <Box>
@@ -86,12 +85,10 @@ addField3()
        </div>
       ))
       }
-      {/* </Grid>
-      </Grid>
-      </Box> */}
+      
       <Box sx={{pt:4.5}}>
       <IconButton onClick={addField3}  style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 15px',fontSize:'25px',fontWeight:'bold' }}><AddBoxIcon/></IconButton>
-      {/* <button type="button"  className="button remove" onClick={() => removeFormFields()}>Remove</button> */}
+       
       </Box>
     </div>
   );

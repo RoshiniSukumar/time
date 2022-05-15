@@ -2,9 +2,10 @@ import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
-import logo from '../../assets/logo.fw.png'
+import logo from '../../assets/logo.fw.png';
+import Cookies from "universal-cookie";
 import Box from '@mui/material/Box';
-import psgcas from '../../assets/PSG-College-of-Arts-Science.jpg'
+import psgcas from '../../assets/4DBD31C9-B384-4B16-9E31-5B753C2E5955 (1).PNG'
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import CardMedia from '@mui/material/CardMedia';
@@ -13,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Footer from './footer';
-// import { createTheme } from '@mui/material/styles';
+
 import blue from '@mui/material/colors/blue';
 
 
@@ -72,7 +73,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       }),
     },
   }),
-);
+); 
+const cookies = new Cookies();
+  var cookie = cookies.get("login");
+  var admincheck = cookies.get("user") === "Admin" ? "/admin" : "/view_docker";
 
 const mdTheme = createTheme();
 
@@ -110,20 +114,17 @@ function DashboardContent() {
           sx={{
             m:0,
             bgcolor: 'text.disabled',
-            // backgroundColor: (theme) =>
-            //   theme.palette.mode === 'light'
-            //     ? theme.palette.grey[100]
-            //     : theme.palette.grey[900],
+           
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
           }}
         >
-    {/* <Container maxWidth="lg" sx={{ mt: 10 }}> */}
-          <Box maxWidth="lg"  sx={{mt:12,ml:14, bgcolor: 'warning.main', color: 'warning.contrastText',}}>
+
+          <Box maxWidth="lg"  sx={{mt:0, bgcolor: 'warning.main', color: 'warning.contrastText',}}>
     <card><CardMedia
         component="img"
-        sx={{ width: 1501,ml:0}}
+        sx={{ width:1685,mt:5}}
         image={psgcas}
         alt="Psgcas"
              />
@@ -131,12 +132,11 @@ function DashboardContent() {
     </Box>
             
 
-          {/* </Container> */}
-          {/* <Container> */}
-          <Box sx={{mt:2}}>
+         
+          <Box sx={{mt:0}}>
             <Footer />
             </Box>
-            {/* </Container> */}
+         
         </Box>
       </Box>
     </ThemeProvider>

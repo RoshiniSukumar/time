@@ -8,13 +8,13 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Text from './text'
+// import Text from './text'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
+
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -31,8 +31,7 @@ function Copyright(props) {
       <Link color="inherit" href="https://mui.com/" underline='none'>
         19BCM040 19BCM041 19BCM002
       </Link>{' '}
-      {/* {new Date().getFullYear()} */}
-      {/* {'.'} */}
+      
     </Typography>
   );
 }
@@ -52,7 +51,7 @@ export default function Register() {
       username: username,
       password: password,
     };
-    console.log(arrayform3);
+    console.log(arrayform3,"arrr");
     let reg = await axios.post(
       "http://localhost:2000/register",
       arrayform3
@@ -65,18 +64,18 @@ export default function Register() {
     else if(reg.data.err=="err"){
        alert("Please fill all the fields");
     }
-    
+  //  console.log(arrayform3,"arrr") 
 };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+   
+  //   console.log({
+  //     email: data.get('email'),
+  //     password: data.get('password'),
+  //   });
+  // };
 const checks = ()=>{
   if(values==="Tutor"){
    {<input/>
@@ -88,22 +87,12 @@ const checks = ()=>{
 else{
   console.log("else")
 }}
-const calks = ()=>{
-  <div>
-    {/* {console.log("im in")} */}
-    {/* <TextField
-    required
-    fullWidth
-    name="password"
-    label="Password"
-    type="password"
-    id="password"
-    autoComplete="new-password"
-    onChange={(e) => setpassword(e.target.value)}
-    /> */}
-    <Text/>
-  </div>
-}
+// const calks = ()=>{
+//   <div>
+   
+//     <Text/>
+//   </div>
+// }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -122,7 +111,7 @@ const calks = ()=>{
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -169,9 +158,9 @@ const calks = ()=>{
                   onChange={(e) => setpassword(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12}>
-              <FormControl>
-  <FormLabel id="demo-radio-buttons-group-label">Designation</FormLabel>
+              {/* <Grid item xs={12}> */}
+              {/* <FormControl> */}
+  {/* <FormLabel id="demo-radio-buttons-group-label">Designation</FormLabel>
   <RadioGroup
     aria-labelledby="demo-radio-buttons-group-label"
     defaultValue="Staff"
@@ -181,19 +170,12 @@ const calks = ()=>{
     <FormControlLabel value="Tutor" control={<Radio />}  onChange={(e) => setvalues(e.target.value)} label="Tutor" />
     <FormControlLabel value="Head" control={<Radio />} onChange={(e) => setvalues(e.target.value)} label="Head" />
   </RadioGroup>
-  {/* {console.log(values)} */}
-  {/* if(values==="Tutor"){ */}
-    {/* // <input/> */}
-  {/* // } */}
-  {/* <Text/> */}
+  
     {checks()}
-  </FormControl>
-              </Grid>
+  </FormControl> */}
+              {/* </Grid> */}
               <Grid item xs={12}>
-                {/* <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                /> */}
+               
             </Grid>
             </Grid>
             <Button
@@ -203,7 +185,7 @@ const calks = ()=>{
               sx={{ mt: 3, mb: 2 }}
               onClick={arrw3}
             >
-              Sign Up
+              Submit
             </Button>
            
           </Box>

@@ -12,8 +12,7 @@ function Copyright() {
       <Link color="inherit" >
       19BCM002 19BCM040 19BCM041
       </Link>
-      {/* {new Date().getFullYear()} */}
-      {'.'}
+    
     </Typography>
   );
 }
@@ -24,7 +23,7 @@ export default function Footer() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        // minHeight: '100vh',
+ 
       }}
     >
       <CssBaseline />
@@ -39,15 +38,12 @@ export default function Footer() {
           mt: 0,position:"relative",
           top:0,
           maxWidth:"100%",
-        //   backgroundColor: (theme) =>
-        //     theme.palette.mode === 'Light'
-        //       ? theme.palette.grey[200]
-        //       : theme.palette.grey[800]
+       
         
         bgcolor:'primary.main'
       }}
       >
-        {/* <Container> */}<Box sx={{pl:10, fontWeight:'bold'}}>
+       <Box sx={{pl:10, fontWeight:'bold'}}>
           <Typography variant="body1" sx={{ fontWeight:'bold'}}>
             PSG College of Arts & Science
           </Typography>
@@ -56,7 +52,7 @@ export default function Footer() {
             Coimbatore - 641 014.
           </Typography>
           <Copyright sx={{alignItems: 'flex-end'}} /></Box>
-        {/* </Container> */}
+        
       </Box>
     </Box>
   );

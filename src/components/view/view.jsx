@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React,{useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -6,8 +6,9 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
+import axios from 'axios';
+import {getFixClass,classs} from "./servies"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -23,7 +24,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
+  
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -43,6 +44,20 @@ const rows = [
 ];
 
 export default function View() {
+useEffect(() => {
+  const fetchdata = async()=>{
+    var teacher =await axios.get("http://localhost:2000/teacher");
+    var fixclass = await axios.get("http://localhost:2000/fixclass");
+    var clas = await axios.get("http://localhost:2000/class");
+    var classArr = ["1a","1b","2a","2b","3a","3b"]
+    classArr.map((va)=>{
+      getFixClass(fixclass.data,teacher.data,va)
+      classs(clas.data,teacher.data,va)
+    })
+}
+fetchdata();
+ }, [])
+ 
   return (
     <TableContainer align="center">
        <Typography

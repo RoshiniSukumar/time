@@ -11,19 +11,13 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from '../timetable/listItems';
 import Cards from './cards'
-
-// import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -38,20 +32,19 @@ const rows = [
 ];
 
 const columns = [
-  { id: 'StaffCode', label: 'Staff Code', minWidth: 250 },
-  { id: 'StaffName', label: 'Staff Name', minWidth: 100 },
+  { id: 'StaffName', label: 'Staff Name', minWidth: 250 },
+  { id: 'StaffHours', label: 'Staff Hours for a cycle' },
   
 ];
 
 function createData(StaffCode,StaffName) {
-  // const density = population / size;
+
   return {StaffCode,StaffName };
 }
 
 
 
 
-// yyy
 function Copyright(props) {
   
   return (
@@ -59,8 +52,7 @@ function Copyright(props) {
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/" underline="none">
       19BCM040, 19BCM041, 19BCM002     </Link>{' '}
-      {/* {new Date().getFullYear()} */}
-      {/* {'.'} */}
+     
     </Typography>
   );
 }
@@ -141,21 +133,22 @@ function DashboardContent() {
     setPage(0);
   };
   useEffect(async () => {
-    var getarray = await axios.get("http://localhost:2000/staff");
+    var getarray = await axios.get("http://localhost:2000/teacher");
     var filtere = getarray.data;
     setarroget(filtere);
     console.log("filterew", arroget);
-    var final = arroget[arroget.length-1];
-    setlastarray(final.arr);
-    console.log(lastarray,"arr");
-    console.log(lastarray.arr,"last");
+    // var final = arroget[arroget.length-1];
+    // setlastarray(final.arr);
+    // console.log(lastarray,"arr");
+    // console.log(lastarray.arr,"last");
     
   }, []);
-  var get1 = lastarray.map((get) => (
+  var get1 = arroget.map((get) => (
     <div>
       <TableRow hover role="checkbox" tabIndex={-1}>
-        {/* {get.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)} */}
-    <TableCell>{get}</TableCell></TableRow></div>
+       
+    <TableCell>{get.name}</TableCell>
+    <TableCell>{get.hrs}</TableCell></TableRow></div>
     ));
   return (
     <ThemeProvider theme={mdTheme}>
@@ -209,7 +202,7 @@ function DashboardContent() {
           <List component="nav" sx={{ pr: 0 }} >
             {mainListItems}
             <Divider  />
-            {/* {secondaryListItems} */}
+        
           </List>
         </Drawer>
         <Box
@@ -228,22 +221,20 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 15, mb: 4 ,mr:5}}>
 
           <Paper sx={{ width: '70%' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell align="center" colSpan={2}>
                 Staff Details
               </TableCell>
-              {/* <TableCell align="center" colSpan={3}>
-                Details
-              </TableCell> */}
+              
             </TableRow>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
-                  align={column.align}
+                  align='center'
                   style={{ top: 57, minWidth: column.minWidth }}
                 >
                   {column.label}
@@ -252,75 +243,20 @@ function DashboardContent() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {lastarray
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })} */}
-{get1}
+           
+          {arroget.map((get) => (
+            <TableRow sx={{maxWidth:100}}>
+             <TableCell  align='center' sx={{maxWidth:100}}>{get.name}</TableCell>
+             <TableCell align='center' sx={{ maxWidth:100}}>
+               {get.hrs}
+              </TableCell></TableRow>
+          ))}   
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+     
     </Paper> 
-            {/* <Grid container spacing={3}>
-              {/* Chart *
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Chart /> *
-                </Paper>
-              </Grid>
-              {/* Recent Deposits *
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Deposits /> *
-                </Paper>
-              </Grid>
-              {/* Recent Orders *
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> 
-                </Paper>
-              </Grid>
-            </Grid> */}
-
-            {/* <Cards /> */}
+           
             <Copyright sx={{ pt: 18 }} />
           </Container>
         </Box>

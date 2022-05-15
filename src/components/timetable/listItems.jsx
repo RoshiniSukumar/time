@@ -7,20 +7,27 @@ import DashboardIcon from '@mui/icons-material/Apps';
 import ShoppingCartIcon from '@mui/icons-material/TableView';
 import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
-import BarChartIcon from '@mui/icons-material/BarChart';
+ import Cookies from 'universal-cookie';
 import HomeIcon from '@mui/icons-material/Home';
-import LayersIcon from '@mui/icons-material/Layers';
+ 
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import {Link} from "react-router-dom"
+const cookies = new Cookies();
+var logouts = () => {
+  cookies.set("login", "false");
+  cookies.set("user", "User");
+  window.open('http://localhost:3000/tt/','_self')
+};
+
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={Link} to='/'>
+    {/* <ListItemButton component={Link} to='/'>
       <ListItemIcon>
         <HomeIcon />
       </ListItemIcon>
       <ListItemText primary="Home" />
-    </ListItemButton>
-    <ListItemButton component={Link} to='/admin'>
+    </ListItemButton>*/}
+    <ListItemButton component={Link} to='/admin'> 
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
@@ -38,13 +45,13 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Manage Accounts" color= 'info.main' />
     </ListItemButton>
-    <ListItemButton component={Link} to='/create_docket'>
+    <ListItemButton component={Link} to='/docket_inp'>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Create Docket" />
     </ListItemButton>
-    <ListItemButton component={Link} to='/'>
+    <ListItemButton component={Link} onClick={logouts}>
       <ListItemIcon>
         <LogoutIcon />
       </ListItemIcon>

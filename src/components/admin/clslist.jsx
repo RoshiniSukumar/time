@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { useState,useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -10,26 +11,48 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from '../timetable/listItems';
 import Cards from './cards'
-// yyy
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+const rows = [
+  createData('India', 'IN'),
+  
+  
+];
+
+const columns = [
+  { id: 'S.no', label:'S.No.', minWidth: 250 },
+  { id: 'Classname', label: 'Class Name',minWidth:100 },
+  
+];
+
+function createData(StaffCode,StaffName) {
+
+  return {StaffCode,StaffName };
+}
+
+
+
+
 function Copyright(props) {
+  
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/" underline="none">
       19BCM040, 19BCM041, 19BCM002     </Link>{' '}
-      {/* {new Date().getFullYear()} */}
-      {/* {'.'} */}
+     
     </Typography>
   );
 }
@@ -92,11 +115,41 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+  const [arroget, setarroget] = useState([])
+  const [lastarray, setlastarray] = useState([])
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+  useEffect(async () => {
+    var getarray = await axios.get("http://localhost:2000/teacher");
+    var filtere = getarray.data;
+    setarroget(filtere);
+    console.log("filterew", arroget);
+    // var final = arroget[arroget.length-1];
+    // setlastarray(final.arr);
+    // console.log(lastarray,"arr");
+    // console.log(lastarray.arr,"last");
+    
+  }, []);
+  var get1 = arroget.map((get) => (
+    <div>
+      <TableRow hover role="checkbox" tabIndex={-1}>
+       
+    <TableCell>{get.name}</TableCell>
+    <TableCell>{get.hrs}</TableCell></TableRow></div>
+    ));
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -149,7 +202,7 @@ function DashboardContent() {
           <List component="nav" sx={{ pr: 0 }} >
             {mainListItems}
             <Divider  />
-            {/* {secondaryListItems} */}
+        
           </List>
         </Drawer>
         <Box
@@ -165,43 +218,69 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
-            {/* <Grid container spacing={3}>
-              {/* Chart *
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Chart /> *
-                </Paper>
-              </Grid>
-              {/* Recent Deposits *
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  {/* <Deposits /> *
-                </Paper>
-              </Grid>
-              {/* Recent Orders *
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <Orders /> 
-                </Paper>
-              </Grid>
-            </Grid> */}
+          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 ,mr:5, fontSize:'25px' }}>
 
-            {/* <Cards /> */}
+          <Paper sx={{ width: '60%', mr:25, fontSize:'25px' }}>
+      <TableContainer>
+        <Table stickyHeader aria-label="sticky table" >
+          <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={2} sx={{fontSize:'35px' }}>
+                Class Details
+              </TableCell>
+              
+            </TableRow>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  // align='center'
+                  sx={{fontSize:'25px' }}
+                  style={{ top: 57, minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+           
+          <TableRow>
+             <TableCell   sx={{maxWidth:100,fontSize:'20px' }}>1</TableCell>
+             <TableCell align='center' sx={{ maxWidth:100,fontSize:'20px'}}>
+               I BSc CS  A
+              </TableCell></TableRow>
+              <TableRow>
+             <TableCell   sx={{maxWidth:100,fontSize:'20px'}}>2</TableCell>
+             <TableCell align='center' sx={{ maxWidth:100,fontSize:'20px'}}>
+               I BSc CS  B
+              </TableCell></TableRow>
+              <TableRow>
+             <TableCell   sx={{maxWidth:100,fontSize:'20px'}}>3</TableCell>
+             <TableCell align='center' sx={{ maxWidth:100,fontSize:'20px'}}>
+               II BSc CS  A
+              </TableCell></TableRow>
+
+              <TableRow>
+             <TableCell   sx={{maxWidth:100,fontSize:'20px'}}>4</TableCell>
+             <TableCell align='center' sx={{ maxWidth:100,fontSize:'20px'}}>
+               II BSc CS  B
+              </TableCell></TableRow>      
+              <TableRow>
+             <TableCell   sx={{maxWidth:100,fontSize:'20px'}}>5</TableCell>
+             <TableCell align='center' sx={{ maxWidth:100,fontSize:'20px'}}>
+               III BSc CS  A
+              </TableCell></TableRow> 
+              <TableRow>
+             <TableCell   sx={{maxWidth:100,fontSize:'20px'}}>6</TableCell>
+             <TableCell align='center' sx={{ maxWidth:100,fontSize:'20px'}}>
+               III BSc CS  B
+              </TableCell></TableRow>   </TableBody>
+        </Table>
+      </TableContainer>
+     
+    </Paper> 
+           
             <Copyright sx={{ pt: 18 }} />
           </Container>
         </Box>
