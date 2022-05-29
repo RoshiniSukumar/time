@@ -1,4 +1,4 @@
-export const timetableGen = (classes, teacher, timetable) => {
+export const timetableGen = (classes, teacher, timetable, ttg, teach) => {
 
     console.log("datassssclasss", classes);
 
@@ -20,25 +20,21 @@ export const timetableGen = (classes, teacher, timetable) => {
     var tt_class = t_class()
     console.log(tt_class);
     var tt = 0;
-    // for (let i = 0; i < day; i++) {
-    //     for (let j = 0; j < hr; j++) {
-    //         d_hr[i][j] = tt_class[tt];
-    //         ++tt;
-    //         if (tt == 5) {
-    //             tt = 0;
-    //             tt_class = t_class()
-    //         }
-    //     }
-    // }
     console.log("steacher", teacher);
     console.log("timetable", timetable);
-    for (let i = 0; i < timetable.length; i++) {
-        var teacherArray = teacher.find((teach) => teach.name === tt_class[tt])
-        var tArray = teacherArray.hrs_alot.find((v) => v === i + 1)
+    for (let i = 1; i < timetable.length; i++) {
+        var teacherArray = teacher.find((teache) => teache.name === tt_class[tt])
+        var tArray = teacherArray.hrs_alot.find((v) => v === i)
+        console.log("teacj", teacherArray);
         if (timetable[i].subject === null && tArray === undefined) {
             var sub = classes.filter((va) => va.subject.staffNAme[0] === tt_class[tt])
             timetable[i].subject = sub[0].subject.subjectName
-            teacherArray.hrs_alot.push(i + "");
+            var da = {
+                className: sub[0].className,
+                subjectName: sub[0].subject.subjectName,
+                hrs: i + ""
+            }
+            teacherArray.hrs_alot.push(da);
             ++tt;
             if (tt == staff.length - 1) {
                 tt = 0;
@@ -47,4 +43,20 @@ export const timetableGen = (classes, teacher, timetable) => {
         }
     }
     console.log("teacher", teacher);
+    console.log(timetable, "time");
+
+    ttg.push(timetable);
+
+    console.log("ttg", ttg);
+    // window.reload();
+    timetable = [
+        { subject: null }, { subject: null }, { subject: null }, { subject: null }, { subject: null },
+        { subject: null }, { subject: null }, { subject: null }, { subject: null }, { subject: null },
+        { subject: null }, { subject: null }, { subject: null }, { subject: null }, { subject: null },
+        { subject: null }, { subject: null }, { subject: null }, { subject: null }, { subject: null },
+        { subject: null }, { subject: null }, { subject: null }, { subject: null }, { subject: null },
+        { subject: null }, { subject: null }, { subject: null }, { subject: null }, { subject: null }
+    ]
+    console.log(timetable, "1");
+    return teacher;
 }

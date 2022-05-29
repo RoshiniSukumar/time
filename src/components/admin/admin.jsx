@@ -6,6 +6,9 @@ import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -23,21 +26,22 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/" underline="none">
-      19BCM040, 19BCM041, 19BCM002     </Link>{' '}
+      <Link color="inherit" href="http://localhost:3000/" underline="none">
+      19BCM040, 19BCM041, 19BCM002, 19BCM020     </Link>{' '}
+       
     </Typography>
   );
-}
-const cookies = new Cookies();
+}const cookies = new Cookies();
 const deletepost = ()=>{
   window.confirm("Are you sure you want to delete?")
-  // axios.delete( "http://localhost:2000/docket")
-  // axios.delete( "http://localhost:2000/core")
-  // axios.delete( "http://localhost:2000/cls")
+  
   axios.delete( "http://localhost:2000/teacher")
+  axios.delete( "http://localhost:2000/timetabe")
+  axios.delete( "http://localhost:2000/cls")
+  axios.delete( "http://localhost:2000/staff")
   axios.delete( "http://localhost:2000/fixclass")
   axios.delete( "http://localhost:2000/class")
-window.alert("data hae been deleted")
+toast.sucess("data has been deleted")
 }
 const drawerWidth = 240;
 var logouts = () => {
@@ -100,6 +104,7 @@ function DashboardContent() {
 
   return (
     <ThemeProvider theme={mdTheme}>
+       <ToastContainer />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>

@@ -2,6 +2,7 @@ import  React,{useEffect, useState} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import Viewhead from './viewhead';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
@@ -42,7 +43,7 @@ function createData(name, calories, fat, carbs, protein,j) {
 
 
 
-export default function View() {
+export default function Viewhead1() {
   const [tt, settt] = useState(null)
   const cookies = new Cookies();
 var role =  cookies.get("role");
@@ -159,7 +160,7 @@ if(tt === null)
         </TableBody>
       </Table>
     </TableContainer>
-    <Button variant="outlined" sx={{mt:4}} onClick={()=>{window.open("http://localhost:3000/tt/staff_view","_self")}}>Staff Docket</Button>
+    <Button variant="outlined" sx={{mt:4}} onClick={()=>{window.open("http://localhost:3000/tt/staff_viewuser","_self")}}>Staff Docket</Button>
     </div>
   );
 }

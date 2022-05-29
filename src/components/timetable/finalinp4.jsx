@@ -1,27 +1,31 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useState,useEffect } from "react";
+import axios from 'axios';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
+
+// import IconButton from '@mui/material/IconButton';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+ 
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
  
 import { mainListItems, secondaryListItems } from './listItems';
-import SeasonScore from './SeasonScore'
-import Inp2 from './inp2'
-import Inp3 from './inp3'
-import Inp4 from './inp4'
-import Creates from './text'
  
 function Copyright(props) {
   return (
@@ -33,7 +37,12 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  // backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+  pt:5
+}));
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -83,6 +92,35 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+    const [value, setValue] = React.useState("");
+    const [val, setval] = useState("")
+    const [totaltextBox, setTotalTextBox] = React.useState([]);
+    const [sample, setSample] = React.useState(Array(3).fill(""));
+    var arrw3 = async () => {
+      const arrayform3 = {
+        // className:value,
+        // subject:
+        //   {
+            className:value,
+            tutorName:val
+        //   }
+        
+      };
+      console.log(arrayform3);
+      let reg = await axios.post(
+        "http://localhost:2000/cls",
+        arrayform3
+      );
+      console.log(reg.data.err)
+    if(reg.data.err==null){
+      
+      window.open('http://localhost:3000/tt/docket_inp2','_self')
+    }
+      
+  };
+   
+    
+  
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -134,6 +172,10 @@ function DashboardContent() {
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
+            {/* <Box sx={{pl:17}}>
+            <IconButton  >
+              <KeyboardBackspaceIcon />
+            </IconButton></Box> */}
           </Toolbar>
           <Divider />
           <List component="nav" sx={{ pr: 0 }} >
@@ -155,22 +197,62 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
+          <Div sx={{pt:10,pl:7}}>{"Enter the class details."}</Div>
+          <Container maxWidth="lg" sx={{ mt: 20, mb: 4,mr:20}}>
+          < Box sx={{ display: 'flex',position:'relative',left:160}}>
+      <Grid container spacing={3} SX={{bgcolor: 'primary.main'}}>
+      <Grid item  xs={12} md={6} lg={3}>
+<TextField
+          required
+          id="outlined-required"
+          label="Name of the class"
+           
+          onChange={(e) => setValue(e.target.value)} 
+        />      
+        </Grid>
+        <Grid item  xs={12} md={6} lg={3}>
+        <TextField
+          required
+          id="outlined-required"
+          label="Name of the Tutor"
+          onChange={(e)=>setval(e.target.value)}
+        />
+        {/* </Grid> */}
+        {/* <Grid item  xs={12} md={6} lg={3}> */}
+       
+<Box sx={{pt:5}}>
+<button
+           
+           variant="contained" 
+           color="primary" 
+           type="submit" 
+            href="http://localhost:3000/tt/create_inp"
+           style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 50px',fontSize:'15px',fontWeight:'bold' }}
+          
+           onClick={arrw3}
+           
+         >Submit and Add Subject</button>
+ 
+</Box>
+<Box sx={{pt:5, pl:0}}>
+<button
+           
+          variant="contained" 
+          color="primary" 
+          type="submit" 
+           href="http://localhost:3000/tt/create_docket2"
+          style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 50px',fontSize:'15px',fontWeight:'bold' }}   
+          onClick={()=>{window.open("http://localhost:3000/tt/docket_inp","_self")}}
+          
+        >Next</button></Box>
+        
+        </Grid>
+
+        </Grid>
+        
+        </Box>
             
-            <Creates/>
-            <Box sx={{pl:0,}}>
-            <Grid container spacing={3} SX={{bgcolor: 'primary.main',pl:50}}>
-    <Grid item  xs={12} md={6} lg={3} sx={{pl:200}}  >
-            
-            <SeasonScore/>  
-            </Grid>
-             
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp2 /> </Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp3 /></Grid>
-            <Grid item  xs={12} md={6} lg={3}  >
-            <Inp4 /></Grid></Grid></Box>
+           
             <Copyright sx={{ pt: 10}} />
           </Container>
         </Box>

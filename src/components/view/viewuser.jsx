@@ -1,7 +1,12 @@
-import * as React from 'react';
+import React from 'react';
+import {useEffect,useState} from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
+import Ttview from './Ttview';
+import Viewhead from "./viewhead"
+import Viewhead1 from "./viewhead1"
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,7 +20,7 @@ import Link from '@mui/material/Link';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
- 
+
 import { mainListItems, secondaryListItems } from '../timetable/listItems';
 import {getFixClass} from "./servies"
 
@@ -25,13 +30,12 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/" underline="none">
-      19BCM040, 19BCM041, 19BCM002     </Link>{' '}
+      <Link color="inherit" href="http://localhost:3000/" underline="none">
+      19BCM040, 19BCM041, 19BCM002, 19BCM020     </Link>{' '}
        
     </Typography>
   );
 }
-
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -81,6 +85,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+  const [tt, settt] = useState([])
+  useEffect(async() => {
+    var tt =await axios.get("http://localhost:2000/cls")
+    console.log("tt",tt.data); 
+    settt(tt.data) 
+    }, [])
 const cookies = new Cookies();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -91,8 +101,13 @@ const cookies = new Cookies();
     cookies.set("user", "User");
     window.open('http://localhost:3000/tt/','_self')
   };
- 
-
+ var usr  = cookies.get("user")
+ var role = cookies.get("role")
+ var disp = role === "Head" ? <Viewhead1/>:<Ttview/>
+console.log('====================================');
+console.log("usr",usr);
+console.log("role",role)
+console.log('====================================');
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -113,7 +128,7 @@ const cookies = new Cookies();
                 ...(open && { display: 'none' }),
               }}
             >
-              <MenuIcon />
+              {/* <MenuIcon /> */}
             </IconButton>
             <Typography
               component="h1"
@@ -124,7 +139,7 @@ const cookies = new Cookies();
             >
               View
             </Typography>
-            <Button size="large" variant="contained" color="secondary" onClick={logouts} >
+            <Button size="large" variant="contained" color="success" onClick={logouts} >
         Logout
       </Button>
 
@@ -146,7 +161,7 @@ const cookies = new Cookies();
           <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
              
             
-            <View />
+            {disp}
             <Copyright sx={{ pt: 10}} />
           </Container>
         </Box>

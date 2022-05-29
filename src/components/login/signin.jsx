@@ -6,7 +6,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { IconButton } from '@mui/material';
 import Link from '@mui/material/Link';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -24,23 +29,22 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/" underline='none'>
-        19BCM040 19BCM041 19BCM002
-      </Link>{' '}
-    
+      <Link color="inherit" href="http://localhost:3000/" underline="none">
+      19BCM040, 19BCM041, 19CM002   </Link>{' '}
+       
     </Typography>
   );
 }
-
 const theme = createTheme();
 
 export default function SignIn() {
   const cookies = new Cookies();
   const [usr, setusr] = useState("");
-  const [pass, setpass] = useState("");
+  const [role, setrole] = useState("");
   const [Login, setLogin] = useState(false);
   cookies.set("login", "false");
   cookies.set("user", "User");
+  cookies.set("role", "Admin");
   // var cookie = cookies.get("login");
   
   const [username, setusername] = useState("");
@@ -51,6 +55,7 @@ export default function SignIn() {
     const arrayform2 = {
       username: username,
       password: password,
+      role:role
     };
     console.log(arrayform2);
     let Data = await axios.post(
@@ -58,14 +63,19 @@ export default function SignIn() {
       arrayform2
     );
     if (Data.data.err == "Username Not Exists") {
-      alert("Username not exists");
+  toast.success("Username not exists");
+    }
+    if (Data.data.err == "Role Incorrect") {
+  toast.success("Role Incorrect");
     }
     if (Data.data.err == "Password Incorrect") {
-      alert("Password Incorrect");
+  toast.success("Password Incorrect");
       console.log(Data.data.err);
     }
     if (Data.data.err == null) {
-      alert(" Welcomes you!!!");
+      var tt = await axios.get("http://localhost:2000/register")
+
+  toast.success(" Welcomes you!!!");
       // window.open("http://localhost:3000/tt/", "_self");
       console.log(Data.data.err);
     }
@@ -74,13 +84,14 @@ export default function SignIn() {
     if (Data.status == 204) {
       setLogin(true);
       cookies.set("user", username);
+  
+      cookies.set("role",role);
       cookies.set("login", "true");
-      var admincheck = cookies.get("user") === "Admin" ? "http://localhost:3000/tt/admin" : "http://localhost:3000/tt/view_user";
+      var admincheck = cookies.get("user") === "admin" ? "http://localhost:3000/tt/admin" : "http://localhost:3000/tt/view_user";
       window.open(admincheck, "_self");
       console.log(admincheck);
     }
-   
-  };
+     };
 // {  console.log(admincheck,cookies.get("user"))}
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -98,6 +109,11 @@ export default function SignIn() {
  
 
     <ThemeProvider theme={theme}>
+      <Box >
+      <ToastContainer />
+            <IconButton  >
+              <KeyboardBackspaceIcon />
+            </IconButton></Box>
       {/* <Card maxWidth="x"> */}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -126,7 +142,17 @@ export default function SignIn() {
               // autoComplete="email"
               autoFocus
               onChange={(e) => setusername(e.target.value)}
-            />
+            /> <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="Role"
+            label="Role"
+            // type="password"
+            // id="password"
+            // autoComplete="current-password"
+            onChange={(e) => setrole(e.target.value)}
+          />
             <TextField
               margin="normal"
               required

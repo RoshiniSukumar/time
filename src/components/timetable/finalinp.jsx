@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import axios from 'axios';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -82,6 +83,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  // backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+  pt:5
+}));
 
 const mdTheme = createTheme();
 
@@ -206,6 +213,10 @@ function DashboardContent() {
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
+            <Box sx={{pl:17}}>
+            <IconButton onClick={()=>{window.open("http://localhost:3000/tt/docket_inp4", "_self")}}  >
+              <KeyboardBackspaceIcon />
+            </IconButton></Box>
           </Toolbar>
           <Divider />
           <List component="nav" sx={{ pr: 0 }} >
@@ -227,9 +238,12 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 20, mb: 4,mr:20}}>
+          <Div sx={{pt:10,pl:7}}>{"Enter the class and its respective papers."}</Div>
+          <Container maxWidth="lg" sx={{ mt: 15, mb: 4,mr:20}}>
+         
           < Box sx={{ display: 'flex',position:'relative',left:110}}>
       <Grid container spacing={3} SX={{bgcolor: 'primary.main'}}>
+      {/* <Div>{"This div's text looks like that of a button."}</Div> */}
       <Grid item  xs={12} md={6} lg={3}>
 <TextField
           required

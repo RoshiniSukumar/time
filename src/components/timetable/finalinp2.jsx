@@ -7,6 +7,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -55,6 +56,12 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+}));
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  // backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+  pt:5
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -223,19 +230,27 @@ function DashboardContent() {
             
           </Toolbar>
         </AppBar>
+        
+
         <Drawer variant="permanent" open={open} >
           <Toolbar
             sx={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-end',
+              // justifyContent: 'flex-end',
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            
+            <IconButton onClick={toggleDrawer} >
               <ChevronLeftIcon />
             </IconButton>
+            <Box sx={{pl:17}}>
+            <IconButton onClick={()=>{window.open("http://localhost:3000/tt/docket_inp", "_self")}}    >
+              <KeyboardBackspaceIcon />
+            </IconButton></Box>
           </Toolbar>
+         
           <Divider />
           <List component="nav" sx={{ pr: 0 }} >
             {mainListItems}
@@ -256,7 +271,9 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
+          <Div sx={{pt:10,pl:7}}>{"Enter the staff details."}</Div>
           <Container maxWidth="lg" sx={{ mt: 20, mb: 4,mr:20}}>
+            
           < Box sx={{ display: 'flex',position:'relative',left:50}}>
       <Grid container spacing={3} SX={{bgcolor: 'primary.main'}}>
       <Grid item  xs={12} md={6} lg={3}>

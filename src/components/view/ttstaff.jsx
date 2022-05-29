@@ -1,70 +1,36 @@
-import React from 'react';
-import { useState,useEffect } from 'react';
+import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import axios from 'axios';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Cookies from 'universal-cookie';
 import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+
 import Link from '@mui/material/Link';
+ 
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+ 
 import { mainListItems, secondaryListItems } from '../timetable/listItems';
-import Cards from './cards'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-const rows = [
-  createData('India', 'IN'),
-  
-  
-];
 
-const columns = [
-  { id: 'S.No.', label: 'S.No.', minWidth: 250 },
-  { id: 'Name', label: 'Core paper' },
-  
-];
-
-function createData(StaffCode,StaffName) {
-
-  return {StaffCode,StaffName };
-}
-
-
-
-
+import Staff from './staff'
+ 
 function Copyright(props) {
-  
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/" underline="none">
-      19BCM040, 19BCM041, 19BCM002     </Link>{' '}
-     
+      <Link color="inherit" href="http://localhost:3000/" underline="none">
+      19BCM040, 19BCM041, 19BCM002, 19BCM020     </Link>{' '}
+       
     </Typography>
   );
-}
-const deletepost = ()=>{
-  window.confirm("Are you sure you want to delete?")
-  axios.delete( "http://localhost:2000/docket")
-  axios.delete( "http://localhost:2000/core")
-  axios.delete( "http://localhost:2000/cls")
-  axios.delete( "http://localhost:2000/staff")
-  axios.delete( "http://localhost:2000/fixed")
-  axios.delete( "http://localhost:2000/allied")
-window.alert("data hae been deleted")
 }
 const drawerWidth = 240;
 
@@ -115,41 +81,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const [arroget, setarroget] = useState([])
-  const [lastarray, setlastarray] = useState([])
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-  useEffect(async () => {
-    var getarray = await axios.get("http://localhost:2000/class");
-    var filtere = getarray.data;
-    setarroget(filtere);
-    console.log("filterew", arroget);
-    // var final = arroget[arroget.length-1];
-    // setlastarray(final.arr);
-    // console.log(lastarray,"arr");
-    // console.log(lastarray.arr,"last");
-    
-  }, []);
-  var get1 = arroget.map((get) => (
-    <div>
-      <TableRow hover role="checkbox" tabIndex={-1}>
-       
-    <TableCell>{get.name}</TableCell>
-    <TableCell>{get.name}</TableCell></TableRow></div>
-    ));
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -179,11 +117,10 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              View
             </Typography>
-            
+             
           </Toolbar>
-          
         </AppBar>
         <Drawer variant="permanent" open={open} >
           <Toolbar
@@ -197,12 +134,16 @@ function DashboardContent() {
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
+            <Box sx={{pl:17}}>
+            <IconButton onClick={()=>{window.open("http://localhost:3000/tt/view_docket","_self")}}  >
+              <KeyboardBackspaceIcon />
+            </IconButton></Box> 
           </Toolbar>
           <Divider />
           <List component="nav" sx={{ pr: 0 }} >
             {mainListItems}
             <Divider  />
-        
+            
           </List>
         </Drawer>
         <Box
@@ -218,47 +159,11 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 ,mr:5}}>
-
-          <Paper sx={{ width: '70%' }}>
-      <TableContainer>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" colSpan={2}>
-                Core paper Details
-              </TableCell>
-              
-            </TableRow>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align='center'
-                  style={{ top: 57, minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-           
-          {arroget.map((get) => (
-            
-            <TableRow sx={{maxWidth:100}}>
-             <TableCell  align='center' sx={{maxWidth:100}}>{}</TableCell>
-             <TableCell align='center' sx={{ maxWidth:100}}>
-             {get.subject.subjectName}
-              </TableCell>{console.log(get)}</TableRow>
-          ))}   
-          </TableBody>
-        </Table>
-      </TableContainer>
-     
-    </Paper> 
-           
-            <Copyright sx={{ pt: 18 }} />
+          <Container maxWidth="lg" sx={{ mt: 15, mb: 4 }}>
+             
+            <Staff/>
+            {/* <View /> */}
+            <Copyright sx={{ pt: 1}} />
           </Container>
         </Box>
       </Box>

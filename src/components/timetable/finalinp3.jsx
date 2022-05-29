@@ -8,6 +8,8 @@ import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import {getFixClass,classs} from "../view/servies"
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
@@ -16,6 +18,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import IconButton from '@mui/material/IconButton';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -82,6 +86,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  // backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(1),
+  pt:5
+}));
 
 const mdTheme = createTheme();
 
@@ -92,6 +102,37 @@ function DashboardContent() {
     const [totaltextBox, setTotalTextBox] = React.useState([]);
     const [totaltextBox1, setTotalTextBox1] = React.useState([]);
     const [sample, setSample] = React.useState(Array(3).fill(""));
+    const fetchdata = async()=>{
+ 
+      var teacher = await axios.get("http://localhost:2000/teacher");
+      var fixclass = await axios.get("http://localhost:2000/fixclass");
+      var clas = await axios.get("http://localhost:2000/class");
+      var cls = await axios.get("http://localhost:2000/cls");
+      var classArr = ["1a","1b","2a","2b","3a","3b"]
+      var ttg = [];
+      var teach =[];
+      classArr.map((va)=>{
+   const timetable = getFixClass(fixclass.data,teacher.data,va)
+     teach =  classs(clas.data,teacher.data,va,timetable,ttg,teach)
+     console.log(cls.data,"tfs");
+    })
+    console.log("ttg",ttg);
+    console.log("teach",teach);
+    // for(let i =0; i<=ttg.length;i++){
+      ttg.map((value,index)=>{
+        let da ={
+          class : classArr[index],
+          timetable:value
+        }
+         axios.post("http://localhost:2000/timetabe",da)
+    console.log(value,"value");
+  }
+  )
+  axios.post("http://localhost:2000/staff",teach)
+     var tt = await axios.get("http://localhost:2000/timetabe")
+    console.log(tt.data,"yy");
+    window.open("http://localhost:3000/tt/view_docket","_self")
+  }
     var arrw3 = async () => {
       totaltextBox.push(hrs);
       totaltextBox1.push(sample);
@@ -192,6 +233,7 @@ fixHrs: totaltextBox
 
   return (
     <ThemeProvider theme={mdTheme}>
+       <ToastContainer />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
@@ -236,6 +278,10 @@ fixHrs: totaltextBox
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
+            <Box sx={{pl:17}}>
+            <IconButton onClick={()=>{window.open("http://localhost:3000/tt/docket_inp2", "_self")}}   >
+              <KeyboardBackspaceIcon />
+            </IconButton></Box>
           </Toolbar>
           <Divider />
           <List component="nav" sx={{ pr: 0 }} >
@@ -257,6 +303,7 @@ fixHrs: totaltextBox
           }}
         >
           <Toolbar />
+          <Div sx={{pt:10,pl:7}}>{"Enter the details of allied papers."}</Div>
           <Container maxWidth="lg" sx={{ mt: 20, mb: 4,mr:20}}>
           < Box sx={{ display: 'flex',position:'relative',left:50}}>
       <Grid container spacing={3} SX={{bgcolor: 'primary.main'}}>
@@ -361,7 +408,8 @@ fixHrs: totaltextBox
           type="submit" 
            href="http://localhost:3000/tt/view_docket"
           style={{ position:'relative', right:'0px', top:'0px', background: '#1e88e5' ,border:"none", color:'white',borderRadius:'5px' ,padding:'10px 50px',fontSize:'15px',fontWeight:'bold' }}         
-          onClick={()=>{window.open("http://localhost:3000/tt/view_docket","_self")}}
+          onClick={()=>{fetchdata()
+            }}
         >Create Docket</button></Box>
         </Grid>
         </Grid>

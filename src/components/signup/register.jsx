@@ -9,12 +9,15 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 // import Text from './text'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { IconButton } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -22,20 +25,15 @@ import axios from "axios";
 
 
 function Copyright(props) {
-  
-  
-
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/" underline='none'>
-        19BCM040 19BCM041 19BCM002
-      </Link>{' '}
-      
+      <Link color="inherit" href="http://localhost:3000/" underline="none">
+      19BCM040, 19BCM041, 19BCM002    </Link>{' '}
+       
     </Typography>
   );
 }
-
 const theme = createTheme();
 
 export default function Register() {
@@ -43,13 +41,14 @@ export default function Register() {
   const [ lastname, setlastname] = useState("")
   const [ username, setusername] = useState("")
   const [ password, setpassword] = useState("")
-  const [values, setvalues] = useState("")
+  const [role, setrole] = useState("")
   var arrw3 = async () => {
     const arrayform3 = {
       firstname: firstname,
       lastname: lastname,
       username: username,
       password: password,
+      role:role
     };
     console.log(arrayform3,"arrr");
     let reg = await axios.post(
@@ -57,13 +56,10 @@ export default function Register() {
       arrayform3
     );
     console.log(reg.data.err)
-    if (reg.data.err == null) {
-    alert("Account Registerd!");
-      window.open("http://localhost:3000/tt/", "_self");
-    }
-    else if(reg.data.err=="err"){
-       alert("Please fill all the fields");
-    }
+    
+toast.sucess("Account Registerd!");
+    window.open("http://localhost:3000/tt/manage_account", "_self");
+    
   //  console.log(arrayform3,"arrr") 
 };
 
@@ -76,17 +72,7 @@ export default function Register() {
   //     password: data.get('password'),
   //   });
   // };
-const checks = ()=>{
-  if(values==="Tutor"){
-   {<input/>
-  }
-  console.log("calks")  
-  console.log(values)
-  }
 
-else{
-  console.log("else")
-}}
 // const calks = ()=>{
 //   <div>
    
@@ -95,8 +81,15 @@ else{
 // }
   return (
     <ThemeProvider theme={theme}>
+       <ToastContainer />
+      <Box >
+            <IconButton onClick={()=>{window.open("http://localhost:3000/tt/manage_account", "_self")}}    >
+              <KeyboardBackspaceIcon onClick={()=>{window.open("http://localhost:3000/tt/manage_account", "_self")}} />
+            </IconButton></Box>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        
+
         <Box
           sx={{
             marginTop: 8,
@@ -158,7 +151,20 @@ else{
                   onChange={(e) => setpassword(e.target.value)}
                 />
               </Grid>
-              {/* <Grid item xs={12}> */}
+              <Grid item xs={12}>
+              <FormControl>
+      <FormLabel id="demo-row-radio-buttons-group-label">Role</FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+      >
+        <FormControlLabel value="Head" onChange={(e) => setrole(e.target.value)} control={<Radio />} label="Head" />
+        <FormControlLabel value="Staff" onChange={(e) => setrole(e.target.value)} control={<Radio />} label="Staff" />
+        
+      </RadioGroup>
+    </FormControl>
+    </Grid>
               {/* <FormControl> */}
   {/* <FormLabel id="demo-radio-buttons-group-label">Designation</FormLabel>
   <RadioGroup
@@ -190,7 +196,7 @@ else{
            
           </Box>
         </Box>
-        <Copyright sx={{ mt: 25 }} />
+        <Copyright sx={{ mt: 15 }} />
       </Container>
     </ThemeProvider>
   );
